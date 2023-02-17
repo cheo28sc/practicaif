@@ -104,19 +104,19 @@
 # else:
 #     print ("good nigth")
 
-ride_type  = " black"
-credits = 4
-ride_price = 0
-final_proce = 0
-if ride_type == "Dooberx":
-    ride_price = 20.5
-elif ride_type == "black":
-    ride_price = 37.9
-else:
-    ride_price = 18.3
-    print ("Ride Price ") 
-    print (ride_price)
-    if credits > 0:
-        final_price = ride_price - credits
-    print ("Final Price")
-print (final_price)
+# ride_type  = " black"
+# credits = 4
+# ride_price = 0
+# final_proce = 0
+# if ride_type == "Dooberx":
+#     ride_price = 20.5
+# elif ride_type == "black":
+#     ride_price = 37.9
+# else:
+#     ride_price = 18.3
+#     print ("Ride Price ") 
+#     print (ride_price)
+#     if credits > 0:
+#         final_price = ride_price - credits
+#     print ("Final Price")
+# print (final_price)
