@@ -16,23 +16,26 @@
     
 # inter_shipping = True
     
-#  total = 150
+# total = 150
 # shipping_cost = 0
-#     if inter_shipping:
-#         shipping_cost += 15
+
+# if inter_shipping:
+#         shipping_cost += 20
 #         print  ("internacinal base cost applied")
 #         if total <= 50:
 #             shipping_cost += 20
-#             elif total 
-
-
+#         elif total <= 100:
+#             shipping_cost += 15
+# else:
+#     shipping_cost += 5
+#     print (f"shipping cost:  {shipping_cost}")
 
 # account = 100
 # interest_rate = 0.004
 # years = 3
-# print ("initial amount:{account}")
+# print (f"initial amount:{account}")
 # counter = 1
-# while counter <= yeras:
+# while counter <= years:
 #     accrued_interest = account * interest_rate
 #     account += accrued_interest
 #     print (f"years{counter}: {account} ")
@@ -74,20 +77,16 @@
 #     for data in data_points:
 #         print (data+1)
 
-# user = ["luis", "juan", "esteban"]
+# users = []
 # number_of_users = len(users)
 # if number_of_users > 0:
 
-# print (len(users))
+#   print (f"online users : {number_of_users}")
 # else:
-#     print ()
+#     print ("offline app")
+    
 
-# flavors = ["cinnamon", "apple","acid"]
-# print ("new flavors: ")
-# print (flavors)
-# ratings = [4,2,5,3]
-# print ("consumer ratings")
-# print 
+
 
 # humidity_level = [87,83,88,87]
 # humidity_level.insert(0.90)
@@ -108,7 +107,7 @@
 
 
 
-# dataset1 = [1,2,3,]
+# dataset1 =  [1,2,3,]
 # dataset2 = [4,5]
 # combined = dataset1 + dataset2
 # print (combined)
@@ -116,9 +115,12 @@
 
 humidity_level = [87,83,88,87,89,100,101,107,107]
 count = humidity_level.count(107)
-find = 107
-
 print (count)
+find = 107
 if find in humidity_level:
     print (f"{find} se encuentra en la lista")
+else:
+    print (f"{find} no se encuentra en la lista")
+    
+    
     
