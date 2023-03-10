@@ -10,30 +10,29 @@
 # print(f"Mi color favorito es el {varios[0]} y como resultado: {suma}.")
     
     
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# from  tkinter import *
-# import time
+#
+from  tkinter import *
+import time
 
-# #FUNCION PARA ACTUALIZAR LA HORA
-# def times():
-# 	current_time=time.strftime("%H:%M:%S") 
-# 	clock.config(text=current_time,bg="black",fg="green",font="Arial 50 bold")
-# 	clock.after(200,times)
+#FUNCION PARA ACTUALIZAR LA HORA
+def times():
+	current_time=time.strftime("%H:%M:%S") 
+	clock.config(text=current_time,bg="black",fg="green",font="Arial 50 bold")
+	clock.after(200,times)
 	
-# #VENTANA
-# root=Tk()
-# root.geometry("485x250")
-# root.title("Reloj digital con Tkinter")
-# clock=Label(root,font=("times",50,"bold"))
+#VENTANA
+root=Tk()
+root.geometry("485x250")
+root.title("Reloj digital con Tkinter")
+clock=Label(root,font=("times",50,"bold"))
 
-# clock.grid(row=2,column=1,pady=25,padx=100)
-# times()
+clock.grid(row=2,column=1,pady=25,padx=100)
+times()
 
-# digi=Label(root,text=" Hora Actual",font="times 24 bold",fg="red")
-# digi.grid(row=0,column=1)
+digi=Label(root,text=" Hora Actual",font="times 24 bold",fg="red")
+digi.grid(row=0,column=1)
 
-# root.mainloop()
+root.mainloop()
 
 #agregar un numero a una lista
 # a = [1,2,3,4,5]
@@ -57,11 +56,11 @@
 #     print("En " + subjects[i] + " has sacado " + scores[i])
     
 #Escribir un programa que pregunte al usuario los números ganadores de la lotería primitiva, los almacene en una lista y los muestre por pantalla ordenados de menor a mayor.    
-# awarded = []
-# for i in range(6):
-#     awarded.append(int(input("Introduce un número ganador: ")))
-# awarded.sort()
-# print("Los números ganadores son " + str(awarded))
+awarded = []
+for i in range(6):
+    awarded.append(int(input("Introduce un número ganador: ")))
+awarded.sort()
+print("Los números ganadores son " + str(awarded))
 
 
 
@@ -80,21 +79,21 @@ for number in numbers:
 
 
 #Escribir un programa que almacene las asignaturas de un curso (por ejemplo Matemáticas, Física, Química, Historia y Lengua) en una lista, pregunte al usuario la nota que ha sacado en cada asignatura y elimine de la lista las asignaturas aprobadas. Al final el programa debe mostrar por pantalla las asignaturas que el usuario tiene que repetir.
-subjects = ["Matemáticas", "Física", "Química", "Historia", "Lengua"]
+subjects = ["Matemáticas", "Física", "Química", "Historia", "Español"]
 passed = []
 for subject in subjects:
     score = float(input("¿Qué nota has sacado en " + subject + "?"))
-    if score >= 5:
+    if score >= 70:
         passed.append(subject)
 for subject in passed:
     subjects.remove(subject)
 print("Tienes que repetir " + str(subjects))  
 
 #solucion 2
-subjects = ["Matemáticas", "Física", "Química", "Historia", "Lengua"]
+subjects = ["Matemáticas", "Física", "Química", "Historia", "Español"]
 for i in range(len(subjects)-1, -1, -1):
     score = float(input("¿Qué nota has sacado en " + subjects[i] + "?"))
-    if score >= 5:
+    if score >= 70:
         subjects.pop(i)
 print("Tienes que repetir " + str(subjects))
 
