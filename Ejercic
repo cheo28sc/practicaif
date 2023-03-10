@@ -1,0 +1,38 @@
+# Inicializar la lista de materias
+materias = ['Matemáticas', 'Ciencias', 'Historia', 'Lenguaje', 'Inglés']
+
+# Mostrar la lista de materias
+print("Las materias del curso son:")
+for materia in materias:
+    print("- " + materia)
+    
+
+# Pedir al usuario que ingrese las notas de cada materia
+notas = {}
+for materia in materias:
+    nota = input("¿Cuál es tu nota en " + materia + "? ")
+    notas[materia] = nota
+
+# Mostrar las notas de cada materia
+print("\nTus notas son:")
+for materia, nota in notas.items():
+    print("- En " + materia + " has sacado " + nota)
+
+# Identificar las materias que se necesitan repetir
+repetir = []
+for materia, nota in notas.items():
+    if float(nota) < 70:
+        repetir.append(materia)
+for materia in repetir:
+    materias.remove(materia)
+
+# Mostrar las materias que se han aprobado y las que se necesitan repetir
+print("\nFelicidades, has aprobado las siguientes materias:")
+for materia in materias:
+    print("- " + materia)
+if repetir:
+    print("\nTendrás que repetir las siguientes materias:")
+    for materia in repetir:
+        print("- " + materia)
+else:
+    print("\n¡Excelente, no tienes que repetir ninguna materia!")
