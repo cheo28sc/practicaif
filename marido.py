@@ -1,102 +1,183 @@
+def menu_principal():
+    print("Menú principal:")
+    print("1. Empleados")
+    print("2. Clientes")
+    print("3. Trabajos")
+    print("4. Salir")
+
+# Función para mostrar el menú de empleados
+def menu_empleados():
+    print("Menú de empleados:")
+    print("1. Ingresar empleado")
+    print("2. Borrar empleado")
+    print("3. Ver empleados")
+    print("4. Salir")
+
+# Función para mostrar el menú de clientes
+def menu_clientes():
+    print("Menú de clientes:")
+    print("1. Ingresar cliente")
+    print("2. Modificar cliente")
+    print("3. Ver clientes")
+    print("4. Salir")
+
+# Función para mostrar el menú de trabajos
+def menu_trabajos():
+    print("Menú de trabajos:")
+    print("1. Brindar servicio")
+    print("2. Ver servicios brindados")
+    print("3. Empleado disponible")
+    print("4. Salir")
 
 
-# Funciones para manejar la información de los empleados
-def empleado():
-    nombre = input("Ingrese el nombre completo del empleado: ")
-    especialidad = input("Ingrese la Especialidad : ")
-    sexo = input("Ingrese ingrese el sexo: ")
 
-    empleado = {"nombre": nombre, "especialidad": especialidad, "sexo": sexo,}
-    empleado.append(empleado)
-    guardar_datos()
-    print("Empleado agregado con éxito.")
+
+
+
+# Definición de listas
+empleados = []
+clientes = []
+trabajos = []
+
+# Funciones para el módulo de empleados
+def ingresar_empleado():
+    nombre = input("Ingrese el nombre del empleado: ")
+    especialidad = input("Ingrese la especialidad del empleado: ")
+    sexo = input("Ingrese el sexo del empleado: ")
+    empleado = {"nombre": nombre, "especialidad": especialidad, "sexo": sexo}
+    if not empleados:
+        empleados.append(empleado)
+    else:
+        posicion = 0
+        while posicion < len(empleados) and empleados[posicion]["nombre"] < nombre:
+            posicion += 1
+        if posicion < len(empleados) and empleados[posicion]["nombre"] == nombre:
+            print("Error: ya existe un empleado con ese nombre")
+        else:
+            empleados.insert(posicion, empleado)
+            print("Empleado ingresado correctamente")
 
 def borrar_empleado():
     nombre = input("Ingrese el nombre del empleado a borrar: ")
-    for empleado in empleados:
-        if empleado["nombre"] == nombre:
-            empleados.remove(empleado)
-            guardar_datos()
-            print("Empleado borrado con éxito.")
-            return
-    print("Empleado no encontrado.")
+    posicion = 0
+    while posicion < len(empleados) and empleados[posicion]["nombre"] != nombre:
+        posicion += 1
+    if posicion == len(empleados):
+        print("Error: no existe un empleado con ese nombre")
+    else:
+        del empleados[posicion]
+        print("Empleado borrado correctamente")
 
 def ver_empleados():
-    print("Lista de empleados:")
-    for empleado in empleados:
-        print(f"Nombre: {empleado['nombre']}, Especialidad: {empleado['especialidad']}, sexo: {empleado['sexo']}")
+    if not empleados:
+        print("No hay empleados registrados")
+    else:
+        for empleado in empleados:
+            print(f"Nombre: {empleado['nombre']}, Especialidad: {empleado['especialidad']}, Sexo: {empleado['sexo']}")
 
-# Funciones para manejar la información de los clientes
-def agregar_cliente():
-    nombre = input("Ingrese el nombre completo del cliente: ")
-    identificacion = input("Ingrese el número de identificación del cliente: ")
-    telefono = input("Ingrese el número de teléfono del cliente: ")
-    cliente = {"nombre": nombre, "identificacion": identificacion, "telefono": telefono}
-    clientes.append(cliente)
-    guardar_datos()
-    print("Cliente agregado con éxito.")
+# Funciones para el módulo de clientes
+def ingresar_cliente():
+    nombre = input("Ingrese el nombre del cliente: ")
+    cedula = input("Ingrese la cédula del cliente: ")
+    telefono = input("Ingrese el teléfono del cliente: ")
+    cliente = {"nombre": nombre, "cedula": cedula, "telefono": telefono}
+    if not clientes:
+        clientes.append(cliente)
+    else:
+        posicion = 0
+        while posicion < len(clientes) and clientes[posicion]["nombre"] < nombre:
+            posicion += 1
+        if posicion < len(clientes) and clientes[posicion]["nombre"] == nombre:
+            print("Error: ya existe un cliente con ese nombre")
+        else:
+            clientes.insert(posicion, cliente)
+            print("Cliente ingresado correctamente")
 
 def modificar_cliente():
-    identificacion = input("Ingrese el número de identificación del cliente a modificar: ")
-    for cliente in clientes:
-        if cliente["identificacion"] == identificacion:
-            cliente["nombre"] = input("Ingrese el nuevo nombre completo del cliente: ")
-            cliente["identificacion"] = input("Ingrese la nueva identificacion del cliente: ")
-            cliente["telefono"] = input("Ingrese el nuevo número de teléfono del cliente: ")
-            guardar_datos()
-            print("Cliente modificado con éxito.")
-            return
-    print("Cliente no encontrado.")
+    nombre = input("Ingrese el nombre del cliente a modificar: ")
+    posicion = 0
+    while posicion < len(clientes) and clientes[posicion]["nombre"] != nombre:
+        posicion += 1
+    if posicion == len(clientes):
+        print("Error: no existe un cliente con ese nombre")
+    else:
+        cedula = input("Ingrese la nueva cédula del cliente: ")
+        telefono = input("Ingrese el nuevo teléfono del cliente: ")
+        clientes[posicion]["cedula"] = cedula
+        clientes[posicion]["telefono"] = telefono
+        print("Cliente modificado correctamente")
 
 def ver_clientes():
-    print("Lista de clientes:")
-    for cliente in clientes:
-        print(f"Nombre: {cliente['nombre']}, Identificación: {cliente['identificacion']}, Dirección: {cliente['direccion']}, Teléfono: {cliente['telefono']}")
-
-# Funciones para manejar la información de los trabajos
-def asignar_trabajo():
-    
-    numero = len(trabajos) + 1
-    servicio  = input("Ingrese la descripción del trabajo: ")
-    cliente = input("Ingrese el número de identificación del cliente para el trabajo: ")
-    empleado = input("Ingrese el número de identificación del empleado para el trabajo: ")
-    fecha_inicio = input("Ingrese la fecha de inicio del trabajo (dd/mm/yyyy): ")
-    fecha_fin = input("Ingrese la fecha de finalización del trabajo (dd/mm/yyyy): ")
-    trabajo = {"numero": numero, "servicio": servicio, "cliente": cliente, "empleado": empleado, "fecha_inicio": fecha_inicio, "fecha_fin": fecha_fin}
-    trabajos.append(trabajo)
-    guardar_datos()
-    print("Trabajo asignado con éxito.")
-while True:
-    print("1. Empleado.")
-    print("2. Clientes.")
-    print("3. Trabajos.")
-    print("5. Salir.")
-    opcion = int(input("Ingrese su opción: "))
-
-    if opcion == 1:
-        nombre, especialidad, sexo = agregar_empleado()
-        print(f"Nombre: {nombre}")
-        print(f"Especialidad: {especialidad}")
-        print(f"Sexo: {sexo}")
-    
-    elif opcion == 2:
-        nombre_cliente, cedula, telefono = agregar_cliente()
-        print(f"Nombre del cliente: {nombre_cliente}")
-        print(f"Cedula: {cedula}")
-        print(f"Telefono: {telefono}")
-    elif opcion == 3:
-        for curso in cursos:
-            promedio = calcular_promedio(curso)
-            print(f"El promedio de {curso} es {promedio:.2f}")
-    elif opcion == 4:
-        total, total_con_descuento, descuento = calcular_total_pagar(cursos)
-        facturar_cursos(total, total_con_descuento, descuento)
-    elif opcion == 5:
-        break
+    if not clientes:
+        print("No hay clientes registrados")
     else:
-        print("Opción inválida. Intente de nuevo.")
+        for cliente in clientes:
+            print(f"Nombre: {cliente['nombre']}, Cédula: {cliente['cedula']}, Teléfono: {cliente['telefono']}")
 
-
-
-
-
+# Funciones para el módulo de trabajos
+def menu_trabajos():
+    while True:
+        print("\n--- Menú de trabajos ---")
+        print("1. Brindar servicio")
+        print("2. Empleado disponible")
+        print("3. Ver servicios brindados")
+        print("4. Salir")
+        
+        opcion = input("Seleccione una opción: ")
+        
+        if opcion == "1":
+            # Brindar servicio
+            print("\n--- Brindar servicio ---")
+            cliente = input("Ingrese el nombre del cliente: ")
+            empleado = input("Ingrese el nombre del empleado: ")
+            servicio = input("Ingrese el nombre del servicio: ")
+            fecha = input("Ingrese la fecha (dd/mm/aaaa): ")
+            
+            # Verificar si el empleado está disponible
+            if empleado in empleados_disponibles:
+                # Agregar el trabajo a la lista de trabajos
+                trabajos.append((fecha, cliente, servicio, empleado))
+                
+                # Cambiar el estado del empleado a no disponible
+                empleados_disponibles.remove(empleado)
+                
+                print("El trabajo se ha registrado exitosamente.")
+            else:
+                print("Lo sentimos, el empleado no está disponible en este momento.")
+                
+        elif opcion == "2":
+            # Empleado disponible
+            print("\n--- Empleado disponible ---")
+            empleado = input("Ingrese el nombre del empleado: ")
+            
+            # Verificar si el empleado está en la lista de empleados
+            if empleado in empleados:
+                # Verificar si el empleado está disponible
+                if empleado in empleados_disponibles:
+                    print("El empleado ya está disponible.")
+                else:
+                    empleados_disponibles.append(empleado)
+                    print("El empleado ahora está disponible.")
+            else:
+                print("El empleado no existe en la lista.")
+                
+        elif opcion == "3":
+            # Ver servicios brindados
+            print("\n--- Servicios brindados ---")
+            
+            # Verificar si hay trabajos registrados
+            if len(trabajos) > 0:
+                print("Fecha\t\tCliente\t\tServicio\tEmpleado")
+                print("--------------------------------------------------------------")
+                
+                for trabajo in trabajos:
+                    print(f"{trabajo[0]}\t{trabajo[1]}\t{trabajo[2]}\t{trabajo[3]}")
+            else:
+                print("No hay servicios brindados registrados.")
+                
+        elif opcion == "4":
+            # Salir
+            break
+        
+        else:
+            print("Opción inválida. Intente de nuevo.")

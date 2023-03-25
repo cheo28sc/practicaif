@@ -1,27 +1,15 @@
 # Definición de listas vacías para almacenar los datos
-
 empleados = []
 clientes = []
 trabajos = []
-from colorama import Fore, Back, Style
+
 def menu_principal():
     while True:
-        from colorama import Fore, Back, Style    
-
-        
-
-        print(Fore.RED + "Menú principal:")
-        print(" ---------------------")
-        print(Fore.BLUE + "| Maridos de Alquiler |")
-        print(" ---------------------")
-        
-        
-        print(" ---------------------")
-        print("|     1. Empleados    |")
-        print("|     2. Clientes     |")
-        print("|     3. Trabajos     |")
-        print("|     4. Salir        |")
-        print(" ---------------------")
+        print("Menú principal:")
+        print("1. Empleados")
+        print("2. Clientes")
+        print("3. Trabajos")
+        print("4. Salir")
         opcion = input("Ingrese una opción: ")
         if opcion == "1":
             menu_empleados()
@@ -37,16 +25,11 @@ def menu_principal():
             # Función para mostrar el menú de empleados
 def menu_empleados():
     while True:
-        print(" ----------------------")
-        print(Fore.CYAN +"|   Menú de empleados: |")
-        print(" ----------------------")
-        
-        print(" ----------------------")
-        print(Fore.GREEN + "| 1. Ingresar empleado |")
-        print("| 2. Borrar empleado   |")
-        print("| 3. Ver empleados     |")
-        print("| 4. Salir             |")
-        print(" ----------------------")
+        print("Menú de empleados:")
+        print("1. Ingresar empleado")
+        print("2. Borrar empleado")
+        print("3. Ver empleados")
+        print("4. Salir")
         opcion = input("Ingrese una opción: ")
         if opcion == "1":
             ingresar_empleado()
@@ -89,16 +72,11 @@ def ver_empleados():
 # Función para mostrar el menú de clientes
 def menu_clientes():
     while True:
-        print(" ----------------------")
-        print(Fore.LIGHTYELLOW_EX +"| Menú de clientes:    |")
-        print(" ----------------------")
-        
-        print(" ----------------------")
-        print("| 1. Ingresar cliente  |")
-        print("| 2. Modificar cliente |")
-        print("| 3. Ver clientes      |")
-        print("| 4. Salir             |")
-        print(" ----------------------")
+        print("Menú de clientes:")
+        print("1. Ingresar cliente")
+        print("2. Modificar cliente")
+        print("3. Ver clientes")
+        print("4. Salir")
         opcion = input("Ingrese una opción: ")
         if opcion == "1":
             ingresar_cliente()
@@ -147,16 +125,11 @@ def ver_clientes():
         # Función para mostrar el menú de trabajos
 def menu_trabajos():
     while True:
-        print(" ----------------------------")
-        print(Fore.LIGHTMAGENTA_EX +"|   Menú de trabajos:        |")
-        print(" ----------------------------")
-        
-        print(" ----------------------------")
-        print("| 1. Brindar servicio        |")
-        print("| 2. Ver servicios brindados |")
-        print("| 3. Empleado disponible     |")
-        print("| 4. Salir                   |")
-        print(" ----------------------------")
+        print("Menú de trabajos:")
+        print("1. Brindar servicio")
+        print("2. Ver servicios brindados")
+        print("3. Empleado disponible")
+        print("4. Salir")
         opcion = input("Ingrese una opción: ")
         if opcion == "1":
             brindar_servicio()
@@ -173,18 +146,33 @@ def menu_trabajos():
 def brindar_servicio():
     print("Brindar servicio:")
     cliente_nombre = input("Ingrese el nombre del cliente: ")
-    servicio = input("Ingrese el servicio a brindar: ")
-    fecha = input("Ingrese la fecha del trabajo (en formato dd/mm/yyyy): ")
+    # Buscamos al cliente por su nombre
+    cliente_encontrado = False
     for cliente in clientes:
         if cliente["nombre"] == cliente_nombre:
-            for empleado in empleados:
-                if empleado["especialidad"] == servicio:
-                    print(f"El empleado {empleado['nombre']} brindará el servicio al cliente {cliente['nombre']} En la fecha {fecha['fecha']} .")
-                    trabajos.append({"cliente": cliente, "empleado": empleado, "servicio": servicio, "fecha": fecha})
-                    return
-            print("No hay empleados disponibles para brindar ese servicio.")
-            return
-    print("No se encontró un cliente con ese nombre.")
+            cliente_encontrado = True
+            break
+    if not cliente_encontrado:
+        print("No se encontró un cliente con ese nombre.")
+        return
+    # Buscamos un empleado disponible con la especialidad necesaria
+    empleado_disponible = None
+    servicio = input("Ingrese el servicio a brindar: ")
+    for empleado in empleados:
+        if empleado["especialidad"] == servicio:
+            # Verificamos que el empleado no tenga trabajos pendientes para la fecha ingresada
+            trabajos_pendientes = [trabajo for trabajo in trabajos if trabajo["empleado"] == empleado and trabajo["fecha"] == fecha]
+            if not trabajos_pendientes:
+                empleado_disponible = empleado
+                break
+    if empleado_disponible is None:
+        print("No hay empleados disponibles con la especialidad necesaria para la fecha ingresada.")
+        return
+    # Creamos el trabajo y lo agregamos a la lista de trabajos
+    nuevo_trabajo = {"cliente": cliente, "empleado": empleado_disponible, "servicio": servicio, "fecha": fecha}
+    trabajos.append(nuevo_trabajo)
+    print("Trabajo agregado con éxito.")
+
 
 
 # Función para ver los servicios brindados
@@ -225,9 +213,6 @@ clientes = []
 trabajos = []
 while True:
     print("Menú principal:")
-    print(" ---------------------")
-    print("| Maridos de Alquiler |")
-    print(" ---------------------")
     print("1. Empleados")
     print("2. Clientes")
     print("3. Trabajos")
@@ -243,6 +228,8 @@ while True:
         break
     else:
         print("Opción inválida.")
+
+
 
 
 
