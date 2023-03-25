@@ -1,7 +1,7 @@
 
 
 # Funciones para manejar la información de los empleados
-def agregar_empleado():
+def empleado():
     nombre = input("Ingrese el nombre completo del empleado: ")
     especialidad = input("Ingrese la Especialidad : ")
     sexo = input("Ingrese ingrese el sexo: ")
