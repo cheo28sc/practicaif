@@ -218,4 +218,30 @@ def empleado_disponible():
     else:
         print("No se encontró un empleado con esa especialidad o todos los empleados están ocupados.")
 
+menu_principal()
+empleados = []
+clientes = []
+trabajos = []
+while True:
+    print("Menú principal:")
+    print(" ---------------------")
+    print("| Maridos de Alquiler |")
+    print(" ---------------------")
+    print("1. Empleados")
+    print("2. Clientes")
+    print("3. Trabajos")
+    print("4. Salir")
+    opcion = input("Ingrese una opción: ")
+    if opcion == "1":
+        menu_empleados()
+    elif opcion == "2":
+        menu_clientes()
+    elif opcion == "3":
+        menu_trabajos()
+    elif opcion == "4":
+        break
+    else:
+        print("Opción inválida.")
+
+
 
