@@ -216,10 +216,13 @@ def empleado_disponible():
                 empleado_disponible = empleado["nombre"]
                 break
                 
-    if empleado_disponible:
-        print(f"El empleado {empleado_disponible} está disponible para trabajar en esa especialidad en la fecha {fecha.strftime('%d/%m/%Y')}.")
-    else:
+    if empleado_disponible is None:
         print(Fore.RED +"No se encontró un empleado con esa especialidad disponible en la fecha indicada.")
+    elif ocupado:
+        print(Fore.RED + f"El empleado {empleado_disponible} está ocupado en la fecha {fecha.strftime('%d/%m/%Y')}.")
+    else:
+        print(f"El empleado {empleado_disponible} está disponible para trabajar en esa especialidad en la fecha {fecha.strftime('%d/%m/%Y')}.")
+
 def ver_servicios_brindados():
     if trabajos:
         for trabajo in trabajos:
