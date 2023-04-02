@@ -3,7 +3,8 @@ clientes = []
 trabajos = []
 from colorama import Fore
 from termcolor import colored
-
+import datetime
+from datetime import datetime
 
 def menu_principal():
     while True:
@@ -91,70 +92,21 @@ def ver_empleados():
     else:
         print(Fore.RED +"No hay empleados en la lista.")
 # Función para mostrar el menú de clientes
-def menu_clientes():
-    while True:
-        print(Fore.YELLOW +" --------------------------------")
-        print(colored("|******* MENÚ DE CLIENTES *******|", "cyan", attrs=["bold"]))
-        print(Fore.YELLOW +" --------------------------------")
-        
-        print(" ----------------------")
-        print("| 1. Ingresar Cliente  |")
-        print("| 2. Modificar Cliente |")
-        print("| 3. Ver Clientes      |")
-        print("| 4. Salir             |")
-        print(" ----------------------")
-        opcion = input("Ingrese una opción: ")
-        if opcion == "1":
-            ingresar_cliente()
-        elif opcion == "2":
-            modificar_cliente()
-        elif opcion == "3":
-            ver_clientes()
-        elif opcion == "4":
-            break
-        else:
-            print(Fore.RED +"Opción Inválida.")     
-        
-    
+import datetime
+from termcolor import colored, cprint
 
-# Funciones para el módulo de clientes
-def ingresar_cliente():
-    nombre = input("Ingrese el Nombre del Cliente: ")
-    apellido = input("Ingrese el Apellido del Cliente: ")
-    cedula = input("Ingrese la Cédula del Cliente: ")
-    telefono = input("Ingrese el Teléfono del Cliente: ")
-    nuevo_cliente = {"nombre": nombre, "cedula": cedula, "telefono": telefono, "apellido": apellido,}
-    for i, cliente in enumerate(clientes):
-        if cliente["nombre"] > nombre:
-            clientes.insert(i, nuevo_cliente)
-            print(Fore.RED +"Cliente Agregado con Éxito.")
-            return
-    clientes.append(nuevo_cliente)
-    print(Fore.RED +"Cliente Agregado con Éxito.")
+# Definición de listas vacías para almacenar los datos
+clientes = []
+empleados = []
+trabajos = []
 
-def modificar_cliente():
-    nombre = input("Ingrese el Nombre del Cliente que desea Modificar: ")
-    for cliente in clientes:
-        if cliente["nombre"] == nombre:
-            cliente["cedula"] = input("Ingrese la nueva Cédula del Cliente: ")
-            cliente["telefono"] = input("Ingrese el nuevo Teléfono del Cliente: ")
-            print("Cliente modificado con éxito.")
-            return
-    print(Fore.RED +"No se Encontró un Cliente con ese Nombre.")
-
-def ver_clientes():
-    if clientes:
-        for cliente in clientes:
-            print(f"Nombre: {cliente['nombre']}\nCédula: {cliente['cedula']}\nTeléfono: {cliente['telefono']}\n")
-    else:
-        print("No hay Clientes en la Lista.")
-        # Función para mostrar el menú de trabajos
+# Función para mostrar el menú de trabajos
 def menu_trabajos():
     while True:
-        print(Fore.MAGENTA+" --------------------------------")
-        print(colored("|******* MENÚ DE TRABAJOS *******|", "green", attrs=["bold"]))
-        print(Fore.MAGENTA+" --------------------------------")
-        
+        cprint(" --------------------------------", "magenta")
+        cprint("|******* MENÚ DE TRABAJOS *******|", "green", attrs=["bold"])
+        cprint(" --------------------------------", "magenta")
+
         print(" ----------------------------")
         print("| 1. Brindar Servicio        |")
         print("| 2. Ver Servicios Brindados |")
@@ -171,65 +123,71 @@ def menu_trabajos():
         elif opcion == "4":
             break
         else:
-            print(Fore.RED +"Opción Inválida.")
+            cprint("Opción Inválida.", "red")
+
 # Función para brindar un servicio
 def brindar_servicio():
     print("Brindar servicio:")
     cliente_nombre = input("Ingrese el Nombre del Cliente: ")
     servicio = input("Ingrese el Servicio a Brindar: ")
     fecha = input("Ingrese la Fecha del Trabajo (en formato dd/mm/yyyy): ")
+    hora_inicio = datetime.datetime.strptime(input("Ingrese la Hora de Inicio del Trabajo (en formato hh:mm): "), '%H:%M')
 
-    empleado_disponible = True # Se asume que el empleado está disponible inicialmente
+    hora_fin_dt = hora_inicio + datetime.timedelta(hours=3)
+    hora_fin = hora_fin_dt.strftime('%H:%M')
     for cliente in clientes:
         if cliente["nombre"] == cliente_nombre:
             for empleado in empleados:
                 if empleado["especialidad"] == servicio:
-                    # Verificar si el empleado ya está ocupado en otra tarea en la misma fecha
+                    disponible = True
                     for trabajo in trabajos:
-                        if trabajo["empleado"] == empleado["nombre"] and trabajo["fecha"] == fecha:
-                            empleado_disponible = False
-                            print(Fore.RED + f"El Empleado {empleado['nombre']} está ocupado en otra tarea en la misma fecha.")
+                        if trabajo["empleado"] == empleado and \
+                            trabajo["fecha"] == fecha and \
+                            (hora_inicio <= trabajo["hora_fin_dt"] and hora_fin_dt >= trabajo["hora_inicio_dt"]):
+                            disponible = False
                             break
-                    if empleado_disponible:
-                        print(f"El Empleado {empleado['nombre']} Brindará el servicio al Cliente {cliente['nombre']} el {fecha}  .")
-                        trabajos.append({"cliente": cliente, "empleado": empleado, "servicio": servicio, "fecha": fecha})
-                    return
-            print(Fore.RED + "No hay Empleados Disponibles para Brindar ese Servicio.")
-            return
-    print(Fore.RED + "No se Encontró un Cliente con ese Nombre.")
-from datetime import datetime
+                    if disponible:
+                        print(f"El Empleado {empleado['nombre']} Brindará el servicio al Cliente {cliente['nombre']} el {fecha} de {hora_inicio.strftime('%H:%M')} a {hora_fin}.")
+                        trabajos.append({"cliente": cliente, "empleado": empleado, "servicio": servicio, "fecha": fecha, "hora_inicio": hora_inicio.strftime('%H:%M'), "hora_fin": hora_fin, "hora_inicio_dt": hora_inicio, "hora_fin_dt": hora_fin_dt})
+                        return
+    cprint("No se encontró un Cliente o Empleado con esa información.", "red")
 
-# Función para verificar si un empleado está disponible
+# Función para ver los servicios brindados
+def ver_servicios_brindados():
+    if trabajos:
+        for trabajo in trabajos:
+            inicio = datetime.datetime.strptime(trabajo["hora_inicio"], '%H:%M')
+            fin = datetime.datetime.strptime(trabajo["hora_fin"], '%H:%M')
+            duracion = (fin - inicio).total_seconds() / 3600  # calcula duración en horas
+            if duracion == 3:
+                print(f"Cliente: {trabajo['cliente']['nombre']}\nServicio: {trabajo['servicio']}\nEmpleado: {trabajo['empleado']['nombre']}\nInicio: {inicio.strftime('%H:%M')}\nFin: {fin.strftime('%H:%M')}\n")
+
 def empleado_disponible():
     especialidad = input("Ingrese la Especialidad del Empleado que Busca: ")
-    fecha = input("Ingrese la Fecha que Requiere (en formato dd/mm/yyyy): ")
-    fecha = datetime.strptime(fecha, '%d/%m/%Y')
+    hora_inicio = datetime.datetime.strptime(input("Ingrese la Hora de Inicio del Trabajo (en formato HH:MM): "), "%H:%M")
+    hora_fin = hora_inicio + datetime.timedelta(hours=3)
+    
     empleado_disponible = None
     for empleado in empleados:
         if empleado["especialidad"] == especialidad:
             ocupado = False
             for trabajo in trabajos:
-                if trabajo["empleado"] == empleado["nombre"] and datetime.strptime(trabajo["fecha"], '%d/%m/%Y') == fecha:
+                if trabajo["empleado"] == empleado and \
+                        trabajo["fecha"] == fecha and \
+                        (hora_inicio <= trabajo["hora_fin_dt"] and hora_fin >= trabajo["hora_inicio_dt"]):
                     ocupado = True
                     break
             if not ocupado:
                 empleado_disponible = empleado["nombre"]
                 break
                 
-    if empleado_disponible is None:
-        print(Fore.RED +"No se encontró un empleado con esa especialidad disponible en la fecha indicada.")
-    elif ocupado:
-        print(Fore.RED + f"El empleado {empleado_disponible} está ocupado en la fecha {fecha.strftime('%d/%m/%Y')}.")
+    if empleado_disponible:
+        print(f"El empleado {empleado_disponible} está disponible para trabajar en esa especialidad y horario.")
     else:
-        print(f"El empleado {empleado_disponible} está disponible para trabajar en esa especialidad en la fecha {fecha.strftime('%d/%m/%Y')}.")
+        print(Fore.RED +"No se encontró un Empleado con esa Especialidad o todos los Empleados están Ocupados en ese horario.")
+        
 
-def ver_servicios_brindados():
-    if trabajos:
-        for trabajo in trabajos:
-            print(f"Cliente: {trabajo['cliente']}\nServicio: {trabajo['servicio']}\nEmpleado: {trabajo['empleado']}\n")
-    else:
-        print(Fore.RED +"No hay Servicios Brindados.")
-        menu_principal()
+menu_principal()
 empleados = []
 clientes = []
 trabajos = []
